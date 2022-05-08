@@ -1,58 +1,54 @@
 const Twit = require("twit");
+const config = require("./config/config");
 
-console.log("Bot starting");
+console.log("bot starting");
 
-const T = new Twit({
-  consumer_key: "",
-  consumer_secret: "",
-  access_token: "",
-  access_token_secret: "",
-});
+const t = new Twit(config);
 
-const stream = T.stream("user");
+const stream = t.stream("user");
 
-const GenerateMessage = (name) => {
+const generatemessage = (name) => {
   const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
   ];
-  const d = new Date();
-  const dayName = days[d.getDay()];
+  const d = new date();
+  const dayname = days[d.getday()];
 
   const msg = `
-        Appreciate the follow  ${name}
-        Hope all is going well there for you!
-        Love meeting new people here on Twitter
-        If your interested in talking drop me a line!
-        BTW, it's codegenius here from Codegenes.
-        \n Happy ${dayName} 😊😊 
-        >> Ernest
+        appreciate the follow  ${name}
+        hope all is going well there for you!
+        love meeting new people here on twitter
+        if your interested in talking drop me a line!
+        btw, it's codegenius here from codegenes.
+        \n happy ${dayname} 😊😊 
+        >> ernest
     `;
   return msg; // your message
 };
 
-const SendMessage = (user) => {
+const sendmessage = (user) => {
   const { screen_name, name } = user.source;
 
   const obj = {
     screen_name,
-    text: GenerateMessage(name),
+    text: generatemessage(name),
   };
-  // the follow stream track if I follow author person too.
+  // the follow stream track if i follow author person too.
   if (screen_name != my_user_name) {
-    console.log(" 🎉🎉🎉🎉 New Follower  🎉🎉🎉🎉🎉 ");
-    setTimeout(() => {
-      T.post("direct_messages/new", obj)
+    console.log(" 🎉🎉🎉🎉 new follower  🎉🎉🎉🎉🎉 ");
+    settimeout(() => {
+      t.post("direct_messages/new", obj)
         .catch((err) => {
           console.error("error", err.stack);
         })
         .then((result) => {
-          console.log(`Message sent successfully To  ${screen_name}  💪💪`);
+          console.log(`message sent successfully to  ${screen_name}  💪💪`);
         });
     }, timeout);
   }
